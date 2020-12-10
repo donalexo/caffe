@@ -226,7 +226,7 @@ use_batchnorm = False
 lr_mult = 1
 # Use different initial learning rate.
 if use_batchnorm:
-    base_lr = 0.0004
+    base_lr = 0.00004
 else:
     # A learning rate for batch_size = 1, num_gpus = 1.
     base_lr = 0.00004
@@ -329,10 +329,9 @@ clip = False
 
 # Solver parameters.
 # Defining which GPUs to use.
-# gpus = ""
-# gpulist = gpus.split(",")
-# num_gpus = len(gpulist)
-num_gpus = 0
+gpus = "0"
+gpulist = gpus.split(",")
+num_gpus = len(gpulist)
 
 # Divide the mini-batch to different GPUs.
 batch_size = 8
@@ -365,7 +364,7 @@ test_iter = int(math.ceil(float(num_test_image) / test_batch_size))
 
 solver_param = {
     # Train parameters
-    'base_lr': base_lr,
+    'base_lr': 0.00001,
     'weight_decay': 0.0005,
     'lr_policy': "multistep",
     'stepvalue': [80000, 100000, 120000],
@@ -373,9 +372,9 @@ solver_param = {
     'momentum': 0.9,
     'iter_size': iter_size,
     'max_iter': 120000,
-    'snapshot': 80000,
-    'display': 10,
-    'average_loss': 10,
+    'snapshot': 2500,
+    'display': 100,
+    'average_loss': 100,
     'type': "SGD",
     'solver_mode': solver_mode,
     'device_id': device_id,
