@@ -83,7 +83,8 @@ if __name__ == "__main__":
     sys.exit()
   # check list file format is correct
   with open(list_file, "r") as lf:
-    for line in lf.readlines():
+    lines = lf.readlines()
+    for line in lines:
       img_file, anno = line.strip("\n").split(" ")
       if not os.path.exists(root_dir + img_file):
         print("image file: {} does not exist".format(root_dir + img_file))
@@ -94,7 +95,7 @@ if __name__ == "__main__":
         if not os.path.exists(root_dir + anno):
           print("annofation file: {} does not exist".format(root_dir + anno))
           sys.exit()
-      break
+      # break
   # check if label map file exist
   if anno_type == "detection":
     if not os.path.exists(label_map_file):

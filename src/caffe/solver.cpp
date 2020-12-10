@@ -214,6 +214,7 @@ void Solver<Dtype>::Step(int iters) {
   smoothed_loss_ = 0;
 
   while (iter_ < stop_iter) {
+    LOG(INFO) << "iter";
     // zero-init the params
     net_->ClearParamDiffs();
     if (param_.test_interval() && iter_ % param_.test_interval() == 0
@@ -238,6 +239,7 @@ void Solver<Dtype>::Step(int iters) {
     }
     loss /= param_.iter_size();
     // average the loss across iterations for smoothed reporting
+    LOG(INFO) << "update smoothed loss";
     UpdateSmoothedLoss(loss, start_iter, average_loss);
     if (display) {
       LOG_IF(INFO, Caffe::root_solver()) << "Iteration " << iter_
@@ -296,7 +298,7 @@ void Solver<Dtype>::Solve(const char* resume_file) {
 
   // Initialize to false every time we start solving.
   requested_early_exit_ = false;
-
+  
   if (resume_file) {
     LOG(INFO) << "Restoring previous solver status from " << resume_file;
     Restore(resume_file);
@@ -305,9 +307,11 @@ void Solver<Dtype>::Solve(const char* resume_file) {
   // For a network that is trained by the solver, no bottom or top vecs
   // should be given, and we will just provide dummy vecs.
   int start_iter = iter_;
+  LOG(INFO) << "Step(param_.max_iter() - iter_);param_.max_iter(): " << param_.max_iter() << ", iter_: " << iter_ ;
   Step(param_.max_iter() - iter_);
   // If we haven't already, save a snapshot after optimization, unless
   // overridden by setting snapshot_after_train := false
+  LOG(INFO) << "param_.snapshot_after_train() && (!param_.snapshot() || iter_ % param_.snapshot() != 0)";
   if (param_.snapshot_after_train()
       && (!param_.snapshot() || iter_ % param_.snapshot() != 0)) {
     Snapshot();
@@ -322,9 +326,11 @@ void Solver<Dtype>::Solve(const char* resume_file) {
   // training, for the train net we only run a forward pass as we've already
   // updated the parameters "max_iter" times -- this final pass is only done to
   // display the loss, which is computed in the forward pass.
+  LOG(INFO) << "If";
   if (param_.display() && iter_ % param_.display() == 0) {
     int average_loss = this->param_.average_loss();
     Dtype loss;
+    LOG(INFO) << "Starting training";
     net_->Forward(&loss);
 
     UpdateSmoothedLoss(loss, start_iter, average_loss);
