@@ -1,6 +1,6 @@
 #!/bin/bash
 
-root_dir=$HOME/caffe/data
+root_dir=$CAFFE_HOME/data
 sub_dir=ImageSets/Main
 dataset_dir=$CAFFE_HOME/data/plates
 bash_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
