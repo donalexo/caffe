@@ -2,10 +2,11 @@
 
 root_dir=$HOME/caffe/data
 sub_dir=ImageSets/Main
+dataset_dir=$CAFFE_HOME/data/plates
 bash_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 for dataset in trainval test
 do
-  dst_file=$bash_dir/$dataset.txt
+  dst_file=$dataset_dir/$dataset.txt
   if [ -f $dst_file ]
   then
     rm -f $dst_file
@@ -38,7 +39,7 @@ do
   # Generate image name and size infomation.
   if [ $dataset == "test" ]
   then
-    $bash_dir/../../build/tools/get_image_size $root_dir $dst_file $bash_dir/$dataset"_name_size.txt"
+    $CAFFE_HOME/build/tools/get_image_size $root_dir $dst_file $dataset_dir/$dataset"_name_size.txt"
   fi
 
   # Shuffle trainval file.
