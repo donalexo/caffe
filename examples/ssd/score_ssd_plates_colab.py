@@ -367,7 +367,7 @@ for file in os.listdir(snapshot_dir):
       base_lr *= 2000.
 
     # Evaluate on whole test set.
-    num_test_image = 26
+    num_test_image = 379
     test_batch_size = 8
     # Ideally test_batch_size should be divisible by num_test_image,
     # otherwise mAP will be slightly off the true value.
